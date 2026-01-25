@@ -1,7 +1,29 @@
-require 'packs'
+require 'packs/core'
 require 'active_support'
 require 'rails/application'
-require 'sorbet-runtime'
+
+# Make sorbet-runtime optional - only load if available
+begin
+  require 'sorbet-runtime'
+rescue LoadError
+  # Define no-op T module if sorbet-runtime is not available
+  module T
+    def self.unsafe(value)
+      value
+    end
+
+    module Sig
+    end
+
+    def self.extended(base)
+      base.define_singleton_method(:sig) { |&_block| }
+    end
+
+    def self.included(base)
+      base.define_method(:sig) { |&_block| }
+    end
+  end
+end
 
 module Packs
   module Rails

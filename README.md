@@ -1,6 +1,8 @@
 # packs-rails
 
-`packs-rails` establishes and implements a set of conventions for splitting up large monoliths built on top of the [`packs`](https://github.com/rubyatscale/packs) standard. `packs-rails` makes it easy to use [`packwerk`](https://github.com/Shopify/packwerk) to modularize your rails app. With `packs-rails`, new packages' autoload paths are automatically added to Rails, so your code will immediately become usable and loadable without additional configuration.
+`packs-rails` establishes and implements a set of conventions for splitting up large monoliths. `packs-rails` makes it easy to use packwerk-style packs to modularize your rails app. With `packs-rails`, new packages' autoload paths are automatically added to Rails, so your code will immediately become usable and loadable without additional configuration.
+
+**Note:** As of version 0.1.0, `packs-rails` uses `packs-core` instead of the full `packs` gem, significantly reducing dependencies. This means `packs-rails` no longer depends on `sorbet-runtime`, `code_ownership`, `packwerk`, or other heavy dependencies. If you need the full `packs` CLI tooling, you can install the `packs` gem separately, but it is not required for Rails integration.
 
 Here is an example application that uses `packs-rails`:
 ```
