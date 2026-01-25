@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
 # Collision detection: Check if Packs is already defined by another gem
-if defined?(::Packs) && !defined?(::Packs::Core)
+if defined?(Packs) && !defined?(Packs::Core)
   # Check if this is from the external 'packs' gem
   # We detect this by checking if certain files are already loaded
-  external_packs_loaded = $LOADED_FEATURES.any? do |feature|
+  external_packs_loaded = $".any? do |feature|
     feature.include?('/packs-') || # packs-specification
-    (feature.end_with?('/packs.rb') && !feature.include?('/packs-core/'))
+      (feature.end_with?('/packs.rb') && !feature.include?('/packs-core/'))
   end
 
   if external_packs_loaded
     raise <<~ERROR
-      
+
       ╔═══════════════════════════════════════════════════════════════════════════════╗
       ║                          PACKS NAMESPACE COLLISION                            ║
       ╚═══════════════════════════════════════════════════════════════════════════════╝
-      
-      The 'Packs' module is already defined by another gem (likely 'packs' or 
+
+      The 'Packs' module is already defined by another gem (likely 'packs' or#{' '}
       'packs-specification'), but packs-core is trying to define it as well.
-      
+
       You cannot use both 'packs' and 'packs-core' gems in the same application.
-      
+
       ┌─────────────────────────────────────────────────────────────────────────────┐
       │ RESOLUTION STEPS:                                                           │
       ├─────────────────────────────────────────────────────────────────────────────┤
@@ -38,7 +38,7 @@ if defined?(::Packs) && !defined?(::Packs::Core)
       │    https://github.com/rubyatscale/packs-rails/issues                        │
       │                                                                             │
       └─────────────────────────────────────────────────────────────────────────────┘
-      
+
     ERROR
   end
 end

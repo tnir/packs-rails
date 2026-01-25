@@ -40,9 +40,11 @@ module Packs
       relative_path.basename.to_s
     end
 
+    # rubocop:disable Naming/PredicatePrefix
     def is_gem?
       @is_gem ||= relative_path.glob('*.gemspec').any?
     end
+    # rubocop:enable Naming/PredicatePrefix
 
     def metadata
       raw_hash['metadata'] || {}
