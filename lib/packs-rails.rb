@@ -1,7 +1,24 @@
 require 'packs/core'
 require 'active_support'
 require 'rails/application'
-require 'sorbet-runtime'
+
+# Make sorbet-runtime optional - only load if available
+begin
+  require 'sorbet-runtime'
+rescue LoadError
+  # Define no-op T module if sorbet-runtime is not available
+  module T
+    def self.unsafe(value)
+      value
+    end
+
+    module Sig
+      def sig(&block)
+        # no-op
+      end
+    end
+  end
+end
 
 module Packs
   module Rails
