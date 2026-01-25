@@ -1,8 +1,0 @@
-inherit_gem:
-  rubocop-shopify: rubocop.yml
-
-AllCops:
-  SuggestExtensions: false
-  NewCops: disable
-
-require: rubocop-performance
