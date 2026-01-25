@@ -1,4 +1,4 @@
-require 'packs'
+require 'packs/core'
 require 'active_support'
 require 'rails/application'
 require 'sorbet-runtime'

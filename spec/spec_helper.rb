@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'packs-rails'
-require 'packs/rspec/support'
+# require 'packs/rspec/support' # Not needed for packs-core
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
