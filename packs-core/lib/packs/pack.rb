@@ -18,7 +18,13 @@ module Packs
     end
 
     def self.from(package_yml_absolute_path)
-      package_loaded_yml = YAML.load_file(package_yml_absolute_path)
+      package_loaded_yml = if YAML.respond_to?(:safe_load_file)
+                             # Ruby 3.1+
+                             YAML.safe_load_file(package_yml_absolute_path, permitted_classes: [], permitted_symbols: [], aliases: true)
+                           else
+                             # Ruby 2.7-3.0
+                             YAML.safe_load(File.read(package_yml_absolute_path), permitted_classes: [], permitted_symbols: [], aliases: true)
+                           end
       path = package_yml_absolute_path.dirname
       relative_path = path.relative_path_from(Specification.root)
       package_name = relative_path.cleanpath.to_s

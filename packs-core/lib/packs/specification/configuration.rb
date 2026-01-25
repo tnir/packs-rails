@@ -17,7 +17,17 @@ module Packs
       end
 
       def self.fetch
-        config_hash = CONFIGURATION_PATHNAME.exist? ? YAML.load_file(CONFIGURATION_PATHNAME) : {}
+        config_hash = if CONFIGURATION_PATHNAME.exist?
+                        if YAML.respond_to?(:safe_load_file)
+                          # Ruby 3.1+
+                          YAML.safe_load_file(CONFIGURATION_PATHNAME, permitted_classes: [], permitted_symbols: [], aliases: true)
+                        else
+                          # Ruby 2.7-3.0
+                          YAML.safe_load(File.read(CONFIGURATION_PATHNAME), permitted_classes: [], permitted_symbols: [], aliases: true)
+                        end
+                      else
+                        {}
+                      end
 
         new(
           pack_paths: pack_paths(config_hash)

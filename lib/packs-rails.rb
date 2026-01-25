@@ -13,9 +13,14 @@ rescue LoadError
     end
 
     module Sig
-      def sig(&block)
-        # no-op
-      end
+    end
+
+    def self.extended(base)
+      base.define_singleton_method(:sig) { |&_block| }
+    end
+
+    def self.included(base)
+      base.define_method(:sig) { |&_block| }
     end
   end
 end
